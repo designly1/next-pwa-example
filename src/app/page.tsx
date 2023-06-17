@@ -1,14 +1,16 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import AddToHomeScreen from '@/components/AddToHomeScreen/AddToHomeScreen'
-import Music from '@/components/Music'
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+
+const Music = dynamic(() => import('@/components/Music'), { loading: () => <p className="animate-bounce">Loading...</p> })
 
 import useUserAgent from '@/hooks/useUserAgent'
 
 export default function Home() {
   const [welcomeMessage, setWelcomeMessage] = useState<string>('Checking device...');
-  const { isMobile, userAgentString } = useUserAgent();
+  const { isMobile, userAgentString ,userAgent } = useUserAgent();
 
   useEffect(() => {
     const welcomeMessage = isMobile ? 'You are on a mobile device.' : 'You are on a desktop device. Please use a mobile device to view this app.';
